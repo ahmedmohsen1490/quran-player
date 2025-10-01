@@ -1,0 +1,7 @@
+{
+  "name": "Quran Player",
+  "description": "A mobile-friendly Quran player with multiple reciters, Surah and Ayah playback, background play, and a clean, themeable interface.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

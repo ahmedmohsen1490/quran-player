@@ -1,0 +1,54 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ استخرج الكود من GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2️⃣ ضبط Node.js
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3️⃣ تثبيت الحزم
+      - name: Install dependencies
+        run: npm install
+
+      # 4️⃣ بناء المشروع للـ Production
+      - name: Build web app
+        run: npm run build
+
+      # 5️⃣ تثبيت Capacitor
+      - name: Install Capacitor
+        run: npm install @capacitor/cli @capacitor/android
+
+      # 6️⃣ إضافة منصة Android (لو مش موجودة)
+      - name: Add Android platform
+        run: npx cap add android || echo "Platform already exists"
+
+      # 7️⃣ نسخ ملفات الويب لـ Android
+      - name: Copy web assets to Android
+        run: npx cap copy android
+
+      # 8️⃣ بناء APK باستخدام Gradle CLI
+      - name: Build APK
+        run: |
+          cd android
+          ./gradlew assembleRelease
+
+      # 9️⃣ رفع الـ APK كـ Artifact
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: quran-player-release.apk
+          path: android/app/build/outputs/apk/release/app-release.apk

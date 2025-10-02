@@ -1,3 +1,25 @@
+
+import { useEffect } from 'react';
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { BackgroundMode } from '@awesome-cordova-plugins/background-mode
+
+useEffect(() => {
+  // تفعيل العمل في الخلفية
+  BackgroundMode.enable();
+
+  // إعداد إشعار تجريبي
+  LocalNotifications.schedule({
+    notifications: [
+      {
+        title: "وقت الأذكار",
+        body: "حان وقت الأذكار اليومية!",
+        id: 1,
+        schedule: { at: new Date(new Date().getTime() + 5000) }, // بعد 5 ثواني للتجربة
+      },
+    ],
+  });
+}, []);
+
 useEffect(() => {
   LocalNotifications.requestPermissions().then(permission => {
     if (permission.granted) {

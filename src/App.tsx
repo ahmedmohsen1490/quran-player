@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { BackgroundMode } from '@awesome-cordova-plugins/background-mode';
 import { registerPlugin } from '@capacitor/core';
-import { Permissions } from '@capacitor/permissions';
+import type { PermissionStatus } from 'capacitor-permissions';
 
+// تسجيل البلجنز
 const BackgroundTask = registerPlugin('BackgroundTask');
+const Permissions = registerPlugin('Permissions');
 
 const App: React.FC = () => {
   const [micPermission, setMicPermission] = useState<boolean>(false);
@@ -14,12 +16,12 @@ const App: React.FC = () => {
     BackgroundMode.enable();
 
     // طلب إذن الميكروفون
-    Permissions.query({ name: 'microphone' }).then(result => {
+    Permissions.query({ name: 'microphone' }).then((result: PermissionStatus) => {
       if (result.state === 'granted') setMicPermission(true);
     });
 
     // طلب إذن الإشعارات
-    LocalNotifications.requestPermissions().then(permission => {
+    LocalNotifications.requestPermissions().then((permission) => {
       if (permission.granted) {
         LocalNotifications.schedule({
           notifications: [
@@ -28,21 +30,19 @@ const App: React.FC = () => {
               body: "حان وقت الأذكار اليومية!",
               id: 1,
               schedule: { at: new Date(new Date().getTime() + 5000) },
-              sound: undefined,
-              attachments: undefined,
-              actionTypeId: undefined,
-              extra: undefined
             }
           ]
         });
       }
     });
 
-    // تفعيل مهمة الخلفية
-    const taskId = BackgroundTask.beforeExit(async () => {
-      console.log("Running background task...");
-      BackgroundTask.finish({ taskId });
-    });
+    // مهمة الخلفية
+    (async () => {
+      const taskId = await BackgroundTask.beforeExit(async () => {
+        console.log("Running background task...");
+      });
+      await BackgroundTask.finish({ taskId });
+    })();
   }, []);
 
   return (

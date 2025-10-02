@@ -10,6 +10,9 @@ android {
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':capacitor-local-notifications')
+    implementation project(':capawesome-capacitor-background-task')
+    implementation project(':capacitor-permissions')
+    implementation project(':capacitor-voice-recorder')
 
 }
 

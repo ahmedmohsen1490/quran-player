@@ -24,7 +24,7 @@
     "@capacitor/status-bar": "7.0.3",
     "@capawesome/capacitor-background-task": "^7.0.1",
     "@google/genai": "^1.21.0",
-    "capacitor-voice-recorder": "^1.1.1",
+    "capacitor-voice-recorder": "^7.0.6",
     "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-device": "^3.0.0",
     "react": "^19.1.0",

@@ -1,6 +1,8 @@
 {
   "name": "quran-player",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "custom",
   "id": "18c6ed93"
 }

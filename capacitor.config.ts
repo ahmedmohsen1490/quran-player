@@ -1,9 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.example.quranplayer',
+  appId: 'io.ionic.starter',
   appName: 'quran-player',
-  webDir: 'dist'
+  webDir: 'www'
 };
 
 export default config;

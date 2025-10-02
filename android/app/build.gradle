@@ -1,6 +1,22 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    compileSdkVersion 33
+
+    defaultConfig {
+        ...
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
     namespace "com.example.quranplayer"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
